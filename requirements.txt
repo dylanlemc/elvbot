@@ -1,0 +1,4 @@
+aiohttp==0.18.3
+cchardet
+gunicorn==19.3.0
+ujson==1.33

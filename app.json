@@ -1,0 +1,28 @@
+{
+  "name": "elvbot",
+  "description": "Search Elvanto for contact details from Slack",
+  "keywords": [
+    "elvanto",
+    "slack"
+  ],
+  "website": "https://github.com/monty5811/elvbot",
+  "repository": "https://github.com/monty5811/elvbot",
+  "success_url": "https://github.com/monty5811/elvbot",
+  "env": {
+    "ELVANTO_KEY": {
+      "description": "Elvanto API Key",
+      "value": ""
+    },
+    "SLACK_USERS_WHITELIST": {
+      "description": "Comma separated list of slack users with permission to see contact details. If blank, any user can perform a search.",
+      "value": ""
+    },
+    "SLACK_TOKEN": {
+      "description": "Slack slash command token to check.",
+      "value": ""
+    }
+  },
+  "addons": [
+    "papertrail:choklad"
+  ]
+}
