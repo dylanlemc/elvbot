@@ -1,9 +1,9 @@
 import asyncio
 import elvanto
 import slack
-from aiohttp import client, web
+from aiohttp import web
 
-async def send_reply(post_data):
+async def send_reply(post_data: dict):
     people = await elvanto.search_people(post_data['text'])
     intro_text = 'You searched Elvanto for "{0}"\nHere are your results:\n'.format(
         post_data['text']
@@ -24,7 +24,7 @@ async def send_reply(post_data):
     await slack.reply(post_data['response_url'], resp_text)
 
 
-async def aio_search_people(request):
+async def aio_search_people(request) -> web.Response:
     await request.post()
     if not slack.check_token(request.POST['token']):
         return web.Response(

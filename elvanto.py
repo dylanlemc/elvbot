@@ -6,7 +6,7 @@ from aiohttp import client
 
 ELVANTO_KEY = os.environ.get('ELVANTO_KEY')
 
-async def fetch_matched_people(payload):
+async def fetch_matched_people(payload: dict) -> list:
     headers = {'content-type': 'application/json'}
     response = await client.post(
         'https://api.elvanto.com/v1/people/search.json',
@@ -24,7 +24,7 @@ async def fetch_matched_people(payload):
 
     return people
 
-async def search_people(search_text):
+async def search_people(search_text: str) -> list:
     search_terms = search_text.split()
     payloads = []
     for search_term in search_terms:

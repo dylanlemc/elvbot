@@ -4,7 +4,7 @@ import ujson
 from aiohttp import client
 
 
-def check_user_has_access(username):
+def check_user_has_access(username: str) -> bool:
     SLACK_USERS_WHITELIST = os.environ.get('SLACK_USERS_WHITELIST')
     if SLACK_USERS_WHITELIST is None:
         return True
@@ -19,7 +19,7 @@ def check_user_has_access(username):
         return False
 
 
-def check_token(token):
+def check_token(token: str) -> bool:
     SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
     if SLACK_TOKEN is None:
         return True
@@ -30,7 +30,7 @@ def check_token(token):
         return False
 
 
-async def reply(url, body):
+async def reply(url: str, body: str):
     headers = {'content-type': 'application/json'}
     payload = {
         'text': body,
