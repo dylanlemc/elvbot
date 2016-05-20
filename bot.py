@@ -11,13 +11,7 @@ async def send_reply(post_data: dict):
 
     results_text = ''
     for person in people:
-        t = '\t*{0} {1}*\n\t\t{2}\n\t\tphone: {3}\n\t\tmobile: {4}\n'.format(
-            person['firstname'],
-            person['lastname'],
-            person['email'],
-            person['phone'],
-            person['mobile'],
-        )
+        t = '\t*{firstname} {lastname}*\n\t\t{email}\n\t\tphone: {phone}\n\t\tmobile: {mobile}\n'.format(person)
         results_text += t
 
     resp_text = intro_text + results_text
