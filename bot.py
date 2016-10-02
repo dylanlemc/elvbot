@@ -1,5 +1,6 @@
 import asyncio
 import elvanto
+import os
 import slack
 from aiohttp import web
 
@@ -9,9 +10,17 @@ async def send_reply(post_data: dict):
         post_data['text']
     )
 
+    ELVANTO_DOMAIN = os.environ.get('ELVANTO_DOMAIN')
+
     results_text = ''
-    for person in people:
-        t = '\t*{firstname} {lastname}*\n\t\t{email}\n\t\tphone: {phone}\n\t\tmobile: {mobile}\n'.format(person)
+    for ID, person in people.items():
+        if ELVANTO_DOMAIN:
+            url = 'https://{0}/admin/people/person/?id={1}'.format(
+                ELVANTO_DOMAIN,
+                ID
+            )
+            person['ur'] = url
+            t = '\t*<url|{firstname} {lastname}>*\n\t\t{email}\n\t\tphone: {phone}\n\t\tmobile: {mobile}\n'.format(person)
         results_text += t
 
     resp_text = intro_text + results_text

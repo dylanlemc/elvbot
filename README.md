@@ -33,6 +33,7 @@ subsequent requests should be nice and snappy.
     . venv/bin/activate
     pip install -r requirements.txt
     # export ELVANTO_KEY=???
+    # export ELVANTO_DOMAIN=???
     # export SLACK_USERS_WHITELIST=???
     # export SLACK_TOKEN=???
     gunicorn -k aiohttp.worker.GunicornWebWorker -w 2 -t 60 bot:app

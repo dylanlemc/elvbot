@@ -13,6 +13,10 @@
       "description": "Elvanto API Key",
       "value": ""
     },
+    "ELVANTO_DOMAIN": {
+      "description": "Domain of your Elvanto Account",
+      "value": ""
+    },
     "SLACK_USERS_WHITELIST": {
       "description": "Comma separated list of slack users with permission to see contact details. If blank, any user can perform a search.",
       "value": ""
