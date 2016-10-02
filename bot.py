@@ -12,19 +12,49 @@ async def send_reply(post_data: dict):
 
     ELVANTO_DOMAIN = os.environ.get('ELVANTO_DOMAIN')
 
-    results_text = ''
+    results = []
     for ID, person in people.items():
-        if ELVANTO_DOMAIN:
-            url = 'https://{0}/admin/people/person/?id={1}'.format(
-                ELVANTO_DOMAIN,
-                ID
-            )
-            person['ur'] = url
-            t = '\t*<url|{firstname} {lastname}>*\n\t\t{email}\n\t\tphone: {phone}\n\t\tmobile: {mobile}\n'.format(person)
-        results_text += t
 
-    resp_text = intro_text + results_text
-    await slack.reply(post_data['response_url'], resp_text)
+        url = 'https://{0}/admin/people/person/?id={1}'.format(
+            ELVANTO_DOMAIN,
+            ID
+        )
+        image = person['picture']
+        title = '{firstname} {lastname}'.format(person)
+        fields = []
+        if person('phone'):
+            fields.append({
+                'title': 'Phone Number',
+                'value': person['phone']
+            })
+        if person('email'):
+            fields.append({
+                'title': 'Email Address',
+                'value': person['email']
+            })
+        if person('mobile'):
+            fields.append({
+                'title': 'Mobile Number',
+                'value': person['mobile']
+            })
+        result = {
+            'title': title,
+            'title_link': url,
+            'thumb_url': image
+        }
+        if fields:
+            result['fields'] = fields
+        else:
+            result['text'] = 'No contact details found for {firstname} {lastname}'.format(person)
+        results.append(result)
+
+
+
+    response = {
+        'text': intro_text,
+        'attachments' : results
+    }
+    await slack.reply(post_data['response_url'], response)
 
 
 async def aio_search_people(request) -> web.Response:

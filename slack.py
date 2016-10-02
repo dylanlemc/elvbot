@@ -1,6 +1,10 @@
 import os
 
-import ujson
+try:
+    import ujson
+except ImportError:
+    import json as ujson
+
 from aiohttp import client
 
 
@@ -30,14 +34,11 @@ def check_token(token: str) -> bool:
         return False
 
 
-async def reply(url: str, body: str):
+async def reply(url: str, body: dict):
     headers = {'content-type': 'application/json'}
-    payload = {
-        'text': body,
-    }
     response = await client.post(
         url,
-        data=ujson.dumps(payload),
+        data=ujson.dumps(body),
         headers=headers
     )
     print('Replied with {0}'.format(body))
