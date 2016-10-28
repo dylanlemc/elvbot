@@ -13,26 +13,26 @@ async def send_reply(post_data: dict):
     ELVANTO_DOMAIN = os.environ.get('ELVANTO_DOMAIN')
 
     results = []
-    for ID, person in people.items():
+    for person in people:
 
         url = 'https://{0}/admin/people/person/?id={1}'.format(
             ELVANTO_DOMAIN,
-            ID
+            person['id']
         )
         image = person['picture']
-        title = '{firstname} {lastname}'.format(person)
+        title = '{firstname} {lastname}'.format(**person)
         fields = []
-        if person('phone'):
+        if person['phone']:
             fields.append({
                 'title': 'Phone Number',
                 'value': person['phone']
             })
-        if person('email'):
+        if person['email']:
             fields.append({
                 'title': 'Email Address',
                 'value': person['email']
             })
-        if person('mobile'):
+        if person['mobile']:
             fields.append({
                 'title': 'Mobile Number',
                 'value': person['mobile']
@@ -45,7 +45,7 @@ async def send_reply(post_data: dict):
         if fields:
             result['fields'] = fields
         else:
-            result['text'] = 'No contact details found for {firstname} {lastname}'.format(person)
+            result['text'] = 'No contact details found for {firstname} {lastname}'.format(**person)
         results.append(result)
 
 

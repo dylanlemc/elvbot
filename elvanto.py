@@ -39,6 +39,4 @@ async def search_people(search_text: str) -> list:
         if data is not None:
             people += data
 
-    people = list({person['id']: person for person in people}.values())
-
     return people
